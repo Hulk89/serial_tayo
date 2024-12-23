@@ -53,7 +53,7 @@ class App:
             DrawBase(i + pyxel.rndi(-10, 10), pyxel.height - POLE[3], 1.2, *POLE)
             for i in range(0, pyxel.width * 2, POLE[2] * 4)
         ]
-        coins = [Coin(100, 92, 1), Coin(120, 92, 1)]
+        coins = [Coin(100, pyxel.height - 10, 1), Coin(120, pyxel.height - 10, 1)]
 
         self.continuous_bgs = [
             (16, far_clouds),
