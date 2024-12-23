@@ -4,6 +4,7 @@ from srcs.draw_obj import (
     DrawBase,
     Coin,
     TAYO,
+    BG_SKY,
     FAR_CLOUD,
     NEAR_CLOUD_1,
     NEAR_CLOUD_2,
@@ -61,6 +62,7 @@ class App:
             for i in range(0, pyxel.width * 2, POLE[2] * 4)
         ]
         coins = [Coin(100, pyxel.height - 10, 1), Coin(120, pyxel.height - 10, 1)]
+        self.bg_sky = [DrawBase(i, pyxel.height - ROAD[3] - TREE[3] - 10, 1, *BG_SKY) for i in range(0, pyxel.width, BG_SKY[2])]
 
         self.continuous_bgs = [
             (16, far_clouds),
@@ -82,6 +84,8 @@ class App:
 
     def draw(self):
         pyxel.cls(12)
+        for sky in self.bg_sky:
+            sky.draw()
 
         for dinom, bg in self.continuous_bgs:
             for item in bg:

@@ -11,6 +11,7 @@ NEAR_CLOUD_2 = (25, 24, 16, 8)
 TREE = (0, 32, 32, 8)
 ROAD = (0, 40, 32, 8)
 POLE = (48, 8, 16, 8)
+BG_SKY = (48, 32, 16, 16)
 
 
 class DrawBase:
