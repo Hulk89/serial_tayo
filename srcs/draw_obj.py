@@ -1,5 +1,18 @@
 import pyxel
 
+
+TAYO = (0, 0, 16, 8)
+RANI = (0, 8, 16, 8)
+GANI = (16, 0, 16, 8)
+ROGY = (16, 8, 16, 8)
+FAR_CLOUD = (0, 16, 14, 5)
+NEAR_CLOUD_1 = (0, 24, 20, 8)
+NEAR_CLOUD_2 = (25, 24, 16, 8)
+TREE = (0, 32, 32, 8)
+ROAD = (0, 40, 32, 8)
+POLE = (48, 8, 16, 8)
+
+
 class DrawBase:
     def __init__(self, x, y, scale, u, v, w, h, img=0):
         self.img_dict = {
@@ -23,46 +36,8 @@ class DrawBase:
     def __len__(self):
         return self.img_dict["w"]
 
-class Tayo(DrawBase):
-    def __init__(self, x, y, scale):
-        super().init(x, y, scale, 0, 0, 16, 8)
-
-class Rani(DrawBase):
-    def __init__(self, x, y, scale):
-        super().__init__(x, y, scale, 0, 8, 16, 8)
-
-class Gani(DrawBase):
-    def __init__(self, x, y, scale):
-        super().__init__(x, y, scale, 16, 0, 16, 8)
-
-class Rogy(DrawBase):
-    def __init__(self, x, y, scale):
-        super().__init__(x, y, scale, 16, 8, 16, 8)
-
-class FarCloud(DrawBase):
-    def __init__(self, x, y, scale):
-        super().__init__(x, y, scale, 0, 16, 14, 5)
-
-class NearCloud1(DrawBase):
-    def __init__(self, x, y, scale):
-        super().__init__(x, y, scale, 0, 24, 20, 8)
-
-class NearCloud2(DrawBase):
-    def __init__(self, x, y, scale):
-        super().__init__(x, y, scale, 25, 24, 16, 8)
-
-class Tree(DrawBase):
-    def __init__(self, x, y, scale):
-        super().__init__(x, y, scale, 32, 0, 32, 8)
-
-class Road(DrawBase):
-    def __init__(self, x, y, scale):
-        super().__init__(x, y, scale, 40, 0, 32, 8)
-
-class Pole(DrawBase):
-    def __init__(self, x, y, scale):
-        super().__init__(x, y, scale, 48, 8, 16, 8)
-
+    def is_hidden(self):
+        return self.x < -len(self)
 
 class Coin(DrawBase):
     def __init__(self, x, y, scale):
