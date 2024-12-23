@@ -31,12 +31,19 @@ class App:
             DrawBase(i + pyxel.rndi(-20, 20), 10 + pyxel.rndi(-8, 8), 1, *FAR_CLOUD)
             for i in range(0, pyxel.width * 2, FAR_CLOUD[2])
         ]
-        near_clouds = [
+        near_clouds_1 = [
             DrawBase(
                 i + pyxel.rndi(-13, 13), 20 + pyxel.rndi(-8, 8), 1.3, *NEAR_CLOUD_1
             )
-            for i in range(0, pyxel.width * 2, int(NEAR_CLOUD_1[2] * 1.3))
+            for i in range(0, pyxel.width * 2, int(NEAR_CLOUD_1[2] * 2))
         ]
+        near_clouds_2 = [
+            DrawBase(
+                i + pyxel.rndi(-13, 13), 20 + pyxel.rndi(-8, 8), 1.3, *NEAR_CLOUD_2
+            )
+            for i in range(30, pyxel.width * 2, int(NEAR_CLOUD_2[2] * 2))
+        ]
+        near_clouds = near_clouds_1 + near_clouds_2
         trees = [
             DrawBase(i, pyxel.height - ROAD[3] - TREE[3], 1, *TREE)
             for i in range(0, pyxel.width * 2, TREE[2])
@@ -86,6 +93,8 @@ class App:
         for coin in self.coins:
             coin.x -= 1
             coin.draw()
+            if coin.is_hidden():
+                coin.x += pyxel.width * 3 + pyxel.rndi(-pyxel.width, pyxel.width)
 
         self.tayo.draw()
 
