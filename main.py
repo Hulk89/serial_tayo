@@ -82,9 +82,9 @@ class App:
             (1, bg_poles),
             (1, roads),
         ]
-        self.coins = [Coin(i + pyxel.rndi(-10, 10),
+        self.coins = [Coin(i + pyxel.rndi(-5, 5),
                            pyxel.height - 10 + pyxel.rndi(-80, 0))
-                        for i in range(100, pyxel.width * 2, 40)]
+                        for i in range(100, pyxel.width * 2, 20)]
 
         self.tayo = DrawBase(72,
                              pyxel.height - TAYO[3] - 2,
@@ -100,8 +100,17 @@ class App:
         # NOTE: update player
         self.tayo.y += self.player_dy
         self.player_dy = min(self.player_dy + 1, 8)
+        if self.tayo.y < 0:  # NOTE: 벽에 부딪히면...
+            self.tayo.y = 0
+            self.player_dy = - self.player_dy
         self.tayo.y = min(self.tayo.y,
                           pyxel.height - TAYO[3] - 2)
+
+        # NOTE: coin collision detection.
+        for coin in self.coins:
+            if self.tayo.is_collision(coin):
+                self.score += 10
+                coin.x = -8  # NOTE: Coin의 width
 
 
     def draw(self):

@@ -40,6 +40,21 @@ class DrawBase:
     def is_hidden(self):
         return self.x < -len(self)
 
+    @property
+    def w(self):
+        return self.img_dict["w"]
+
+    @property
+    def h(self):
+        return self.img_dict["h"]
+
+    def is_collision(self, o):
+        horizontal_overlap = (self.x < o.x + o.w) and (self.x + self.w > o.x)
+        vertical_overlap = (self.y < o.y + o.h) and (self.y + self.h > o.y)
+    
+        return horizontal_overlap and vertical_overlap
+
+
 class Coin(DrawBase):
     def __init__(self, x, y, scale=1):
         super().__init__(x, y, scale, 32, 0, 8, 8)
