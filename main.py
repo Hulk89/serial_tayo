@@ -9,6 +9,9 @@ from srcs.draw_obj import (
     DrawBase,
     Coin,
     TAYO,
+    BILLY,
+    POKO,
+    CHRIS,
     BG_SKY,
     FAR_CLOUD,
     NEAR_CLOUD_1,
@@ -16,10 +19,12 @@ from srcs.draw_obj import (
     TREE,
     ROAD,
     POLE,
+    JUMP,
 )
 
 JUMP_CHANNEL=2
 COIN_CHANNEL=3
+TRANSFORM_SCORE_THR = 150
 
 def generate_objects(object_tuple,
                      y,
@@ -39,6 +44,7 @@ class App:
         pyxel.load("./assets/tayo.pyxres")
 
         self.score = 0
+        self.prev_score = 0
         self.player_dy = 0
 
         self.setup_env()
@@ -93,6 +99,9 @@ class App:
         self.coins = [Coin(i + pyxel.rndi(-5, 5),
                            pyxel.height - 10 + pyxel.rndi(-80, 0))
                         for i in range(100, pyxel.width * 2, 20)]
+        self.jumps = generate_objects(JUMP,
+                                      y=pyxel.height - JUMP[3] - 2,
+                                      step=pyxel.width//3*2)
 
         self.tayo = DrawBase(72,
                              pyxel.height - TAYO[3] - 2,
@@ -116,14 +125,34 @@ class App:
             pyxel.play(JUMP_CHANNEL, 4)
         self.tayo.y = min(self.tayo.y,
                           pyxel.height - TAYO[3] - 2)
-
+        
+        for jump in self.jumps:
+            if self.tayo.is_collision(jump):
+                self.player_dy = -12
+                pyxel.play(JUMP_CHANNEL, 6)
+        
         # NOTE: coin collision detection.
         for coin in self.coins:
             if self.tayo.is_collision(coin):
                 self.score += 10
                 coin.x = -8  # NOTE: Coin의 width
                 pyxel.play(COIN_CHANNEL, 2)
+                # NOTE: 100점마다 소리 바꿔주기
 
+                if self.score // TRANSFORM_SCORE_THR > 0 and \
+                   (self.score // TRANSFORM_SCORE_THR) > (self.prev_score // TRANSFORM_SCORE_THR):
+                    self.prev_score = self.score
+                    random_character = [BILLY, POKO, CHRIS]
+                    char = random_character[pyxel.rndi(0, 2)]
+                    print(char)
+                    self.tayo.img_dict["u"] = char[0]
+                    self.tayo.img_dict["v"] = char[1]
+                    pyxel.playm(1, loop=False)
+
+        if pyxel.play_pos(0) is None:
+            self.tayo.img_dict["u"] = TAYO[0]
+            self.tayo.img_dict["v"] = TAYO[1]
+            pyxel.playm(0, loop=True)
 
     def draw(self):
         pyxel.cls(12)
@@ -141,7 +170,12 @@ class App:
             coin.x -= 1
             coin.draw()
             if coin.is_hidden():
-                coin.x += pyxel.width * 3 + pyxel.rndi(-pyxel.width, pyxel.width)
+                coin.x += pyxel.width * 2+ pyxel.rndi(-pyxel.width//2, pyxel.width//2)
+        for jump in self.jumps:
+            jump.x -= 1
+            jump.draw()
+            if jump.is_hidden():
+                jump.x += pyxel.width * 3 + pyxel.rndi(-pyxel.width, pyxel.width)
 
         self.tayo.draw()
 

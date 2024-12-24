@@ -2,9 +2,10 @@ import pyxel
 
 
 TAYO = (0, 0, 16, 8)
-RANI = (0, 8, 16, 8)
-GANI = (16, 0, 16, 8)
-ROGY = (16, 8, 16, 8)
+CHRIS = (0, 8, 16, 8)
+BILLY = (16, 0, 16, 8)
+POKO = (16, 8, 16, 8)
+
 FAR_CLOUD = (0, 16, 14, 5)
 NEAR_CLOUD_1 = (0, 24, 20, 8)
 NEAR_CLOUD_2 = (25, 24, 16, 8)
@@ -13,6 +14,7 @@ ROAD = (0, 40, 32, 8)
 POLE = (48, 8, 16, 8)
 BG_SKY = (48, 32, 16, 16)
 
+JUMP = (32, 8, 8, 8)
 
 class DrawBase:
     def __init__(self, x, y, scale, u, v, w, h, img=0):
