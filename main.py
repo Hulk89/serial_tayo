@@ -1,7 +1,7 @@
 # title: Serial Tayo
 # author: Hulk.5
 # desc: for geonhoo
-# version: 1.0
+# version: 1.1
 
 import pyxel
 
@@ -12,6 +12,7 @@ from srcs.draw_obj import (
     BILLY,
     POKO,
     CHRIS,
+    MAX,
     BG_SKY,
     FAR_CLOUD,
     NEAR_CLOUD_1,
@@ -142,8 +143,8 @@ class App:
                 if self.score // TRANSFORM_SCORE_THR > 0 and \
                    (self.score // TRANSFORM_SCORE_THR) > (self.prev_score // TRANSFORM_SCORE_THR):
                     self.prev_score = self.score
-                    random_character = [BILLY, POKO, CHRIS]
-                    char = random_character[pyxel.rndi(0, 2)]
+                    random_character = [BILLY, POKO, CHRIS, MAX]
+                    char = random_character[pyxel.rndi(0, len(random_character)-1)]
                     self.tayo.img_dict["u"] = char[0]
                     self.tayo.img_dict["v"] = char[1]
                     pyxel.playm(1, loop=False)
