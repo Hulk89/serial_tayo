@@ -13,6 +13,9 @@ from srcs.draw_obj import (
     POLE,
 )
 
+JUMP_CHANNEL=2
+COIN_CHANNEL=3
+
 def generate_objects(object_tuple,
                      y,
                      step,
@@ -97,12 +100,15 @@ class App:
         if pyxel.btnp(pyxel.KEY_SPACE) or \
            pyxel.btnp(pyxel.MOUSE_BUTTON_LEFT):
             self.player_dy = -8
+            pyxel.play(JUMP_CHANNEL, 3)
         # NOTE: update player
         self.tayo.y += self.player_dy
         self.player_dy = min(self.player_dy + 1, 8)
         if self.tayo.y < 0:  # NOTE: 벽에 부딪히면...
             self.tayo.y = 0
             self.player_dy = - self.player_dy
+            self.score -= 5
+            pyxel.play(JUMP_CHANNEL, 4)
         self.tayo.y = min(self.tayo.y,
                           pyxel.height - TAYO[3] - 2)
 
@@ -111,6 +117,7 @@ class App:
             if self.tayo.is_collision(coin):
                 self.score += 10
                 coin.x = -8  # NOTE: Coin의 width
+                pyxel.play(COIN_CHANNEL, 2)
 
 
     def draw(self):
