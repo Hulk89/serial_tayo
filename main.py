@@ -14,6 +14,9 @@ from srcs.draw_obj import (
     CHRIS,
     MAX,
     NEW_CAR_1,
+    NEW_CAR_2,
+    NEW_CAR_3,
+    NEW_CAR_4,
     BG_SKY,
     FAR_CLOUD,
     NEAR_CLOUD_1,
@@ -145,10 +148,11 @@ class App:
                    (self.score // TRANSFORM_SCORE_THR) > (self.prev_score // TRANSFORM_SCORE_THR):
                     self.prev_score = self.score
                     random_character = [BILLY, POKO, CHRIS, MAX, NEW_CAR_1, NEW_CAR_2, NEW_CAR_3, NEW_CAR_4]
-                    char = random_character[self.idx]
+                    char = random_character[self.idx % len(random_character)]
                     self.tayo.img_dict["u"] = char[0]
                     self.tayo.img_dict["v"] = char[1]
                     self.idx += 1
+                    self.idx % len(random_character)
                     pyxel.playm(1, loop=False)
 
         if pyxel.play_pos(0) is None:
