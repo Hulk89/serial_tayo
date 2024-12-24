@@ -27,12 +27,10 @@ def generate_objects(object_tuple,
 
 class App:
     def __init__(self):
-        pyxel.init(160, 100, title="Serial Tayo")
+        pyxel.init(160, 100, title="Serial Tayo", capture_sec=10, capture_scale=2)
         pyxel.load("./assets/tayo.pyxres")
 
         self.score = 0
-        self.player_x = 72
-        self.player_y = pyxel.height - TAYO[3]-2
         self.player_dy = 0
 
         self.setup_env()
@@ -73,7 +71,6 @@ class App:
                                     rand_x_range=(-10, 10),
                                     scale=1.2,
                                     step=POLE[2] * 4) 
-        coins = [Coin(100, pyxel.height - 10, 1), Coin(120, pyxel.height - 10, 1)]
 
         self.bg_sky = generate_objects(BG_SKY,
                                        y=pyxel.height - ROAD[3] - TREE[3] - 10,
@@ -85,14 +82,27 @@ class App:
             (1, bg_poles),
             (1, roads),
         ]
-        self.coins = coins
+        self.coins = [Coin(i + pyxel.rndi(-10, 10),
+                           pyxel.height - 10 + pyxel.rndi(-80, 0))
+                        for i in range(100, pyxel.width * 2, 40)]
 
-        self.tayo = DrawBase(self.player_x, self.player_y, 1, *TAYO)
+        self.tayo = DrawBase(72,
+                             pyxel.height - TAYO[3] - 2,
+                             1,
+                             *TAYO)
         
         self.fg_poles = fg_poles
 
     def update(self):
-        pass
+        if pyxel.btnp(pyxel.KEY_SPACE) or \
+           pyxel.btnp(pyxel.MOUSE_BUTTON_LEFT):
+            self.player_dy = -8
+        # NOTE: update player
+        self.tayo.y += self.player_dy
+        self.player_dy = min(self.player_dy + 1, 8)
+        self.tayo.y = min(self.tayo.y,
+                          pyxel.height - TAYO[3] - 2)
+
 
     def draw(self):
         pyxel.cls(12)

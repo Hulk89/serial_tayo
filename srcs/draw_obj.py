@@ -41,7 +41,7 @@ class DrawBase:
         return self.x < -len(self)
 
 class Coin(DrawBase):
-    def __init__(self, x, y, scale):
+    def __init__(self, x, y, scale=1):
         super().__init__(x, y, scale, 32, 0, 8, 8)
         
     def draw(self):
