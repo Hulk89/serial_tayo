@@ -13,6 +13,7 @@ from srcs.draw_obj import (
     POKO,
     CHRIS,
     MAX,
+    NEW_CAR_1,
     BG_SKY,
     FAR_CLOUD,
     NEAR_CLOUD_1,
@@ -143,7 +144,7 @@ class App:
                 if self.score // TRANSFORM_SCORE_THR > 0 and \
                    (self.score // TRANSFORM_SCORE_THR) > (self.prev_score // TRANSFORM_SCORE_THR):
                     self.prev_score = self.score
-                    random_character = [BILLY, POKO, CHRIS, MAX]
+                    random_character = [BILLY, POKO, CHRIS, MAX, NEW_CAR_1]
                     char = random_character[pyxel.rndi(0, len(random_character)-1)]
                     self.tayo.img_dict["u"] = char[0]
                     self.tayo.img_dict["v"] = char[1]
