@@ -26,7 +26,7 @@ from srcs.draw_obj import (
 
 JUMP_CHANNEL=2
 COIN_CHANNEL=3
-TRANSFORM_SCORE_THR = 150
+TRANSFORM_SCORE_THR = 50
 
 def generate_objects(object_tuple,
                      y,
