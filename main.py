@@ -48,7 +48,7 @@ class App:
         self.score = 0
         self.prev_score = 0
         self.player_dy = 0
-
+        self.idx = 0
         self.setup_env()
 
         pyxel.playm(0, loop=True)
@@ -144,10 +144,11 @@ class App:
                 if self.score // TRANSFORM_SCORE_THR > 0 and \
                    (self.score // TRANSFORM_SCORE_THR) > (self.prev_score // TRANSFORM_SCORE_THR):
                     self.prev_score = self.score
-                    random_character = [BILLY, POKO, CHRIS, MAX, NEW_CAR_1]
-                    char = random_character[pyxel.rndi(0, len(random_character)-1)]
+                    random_character = [BILLY, POKO, CHRIS, MAX, NEW_CAR_1, NEW_CAR_2, NEW_CAR_3, NEW_CAR_4]
+                    char = random_character[self.idx]
                     self.tayo.img_dict["u"] = char[0]
                     self.tayo.img_dict["v"] = char[1]
+                    self.idx += 1
                     pyxel.playm(1, loop=False)
 
         if pyxel.play_pos(0) is None:
