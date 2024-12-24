@@ -144,7 +144,6 @@ class App:
                     self.prev_score = self.score
                     random_character = [BILLY, POKO, CHRIS]
                     char = random_character[pyxel.rndi(0, 2)]
-                    print(char)
                     self.tayo.img_dict["u"] = char[0]
                     self.tayo.img_dict["v"] = char[1]
                     pyxel.playm(1, loop=False)
