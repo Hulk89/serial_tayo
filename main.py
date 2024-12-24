@@ -13,6 +13,18 @@ from srcs.draw_obj import (
     POLE,
 )
 
+def generate_objects(object_tuple,
+                    y,
+                    step,
+                    rand_x_range=(0, 0),
+                    rand_y_range=(0, 0),
+                    scale=1):
+    
+    return [DrawBase(i + pyxel.rndi(*rand_x_range),
+                     y + pyxel.rndi(*rand_y_range),
+                     scale,
+                     *object_tuple)
+        for i in range(0, pyxel.width * 2, step)]
 
 class App:
     def __init__(self):
@@ -28,39 +40,38 @@ class App:
         pyxel.run(self.update, self.draw)
 
     def setup_env(self):
-        far_clouds = [
-            DrawBase(i + pyxel.rndi(-20, 20), 10 + pyxel.rndi(-8, 8), 1, *FAR_CLOUD)
-            for i in range(0, pyxel.width * 2, FAR_CLOUD[2])
-        ]
-        near_clouds_1 = [
-            DrawBase(
-                i + pyxel.rndi(-13, 13), 20 + pyxel.rndi(-8, 8), 1.3, *NEAR_CLOUD_1
-            )
-            for i in range(0, pyxel.width * 2, int(NEAR_CLOUD_1[2] * 2))
-        ]
-        near_clouds_2 = [
-            DrawBase(
-                i + pyxel.rndi(-13, 13), 20 + pyxel.rndi(-8, 8), 1.3, *NEAR_CLOUD_2
-            )
-            for i in range(30, pyxel.width * 2, int(NEAR_CLOUD_2[2] * 2))
-        ]
+        far_clouds = generate_objects(FAR_CLOUD,
+                                      y=10,
+                                      step=FAR_CLOUD[2],
+                                      rand_x_range=(-20, 20),
+                                      rand_y_range=(-8, 8))
+        near_clouds_1 = generate_objects(NEAR_CLOUD_1,
+                                         y=30,
+                                         step=NEAR_CLOUD_1[2] * 2,
+                                         rand_x_range=(-13, 13),
+                                         rand_y_range=(-8, 8))
+        near_clouds_2 = generate_objects(NEAR_CLOUD_2,
+                                         y=30,
+                                         step=NEAR_CLOUD_2[2] * 2,
+                                         rand_x_range=(-13, 13),
+                                         rand_y_range=(-10, 10))
         near_clouds = near_clouds_1 + near_clouds_2
-        trees = [
-            DrawBase(i, pyxel.height - ROAD[3] - TREE[3], 1, *TREE)
-            for i in range(0, pyxel.width * 2, TREE[2])
-        ]
-        roads = [
-            DrawBase(i, pyxel.height - ROAD[3], 1, *ROAD)
-            for i in range(0, pyxel.width * 2, ROAD[2])
-        ]
-        bg_poles = [
-            DrawBase(i + pyxel.rndi(-8, 8), pyxel.height - ROAD[3] - POLE[3], 1, *POLE)
-            for i in range(0, pyxel.width * 2, POLE[2] * 3)
-        ]
-        fg_poles = [
-            DrawBase(i + pyxel.rndi(-10, 10), pyxel.height - POLE[3], 1.2, *POLE)
-            for i in range(0, pyxel.width * 2, POLE[2] * 4)
-        ]
+        trees = generate_objects(TREE,
+                                 y=pyxel.height - ROAD[3] - TREE[3],
+                                 step=TREE[2])
+        roads = generate_objects(ROAD,
+                                 y=pyxel.height - ROAD[3],
+                                 step=ROAD[2])
+
+        bg_poles = generate_objects(POLE,
+                                    y=pyxel.height - ROAD[3] - POLE[3],
+                                    rand_x_range=(-8, 8),
+                                    step=POLE[2] * 3) 
+        fg_poles = generate_objects(POLE,
+                                    y=pyxel.height - POLE[3],
+                                    rand_x_range=(-10, 10),
+                                    scale=1.2,
+                                    step=POLE[2] * 4) 
         coins = [Coin(100, pyxel.height - 10, 1), Coin(120, pyxel.height - 10, 1)]
         self.bg_sky = [DrawBase(i, pyxel.height - ROAD[3] - TREE[3] - 10, 1, *BG_SKY) for i in range(0, pyxel.width, BG_SKY[2])]
 
