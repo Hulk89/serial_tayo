@@ -14,12 +14,11 @@ from srcs.draw_obj import (
 )
 
 def generate_objects(object_tuple,
-                    y,
-                    step,
-                    rand_x_range=(0, 0),
-                    rand_y_range=(0, 0),
-                    scale=1):
-    
+                     y,
+                     step,
+                     rand_x_range=(0, 0),
+                     rand_y_range=(0, 0),
+                     scale: float = 1):
     return [DrawBase(i + pyxel.rndi(*rand_x_range),
                      y + pyxel.rndi(*rand_y_range),
                      scale,
@@ -32,6 +31,8 @@ class App:
         pyxel.load("./assets/tayo.pyxres")
 
         self.score = 0
+        self.player_x = 72
+        self.player_y = pyxel.height - TAYO[3]-2
         self.player_dy = 0
 
         self.setup_env()
@@ -73,8 +74,10 @@ class App:
                                     scale=1.2,
                                     step=POLE[2] * 4) 
         coins = [Coin(100, pyxel.height - 10, 1), Coin(120, pyxel.height - 10, 1)]
-        self.bg_sky = [DrawBase(i, pyxel.height - ROAD[3] - TREE[3] - 10, 1, *BG_SKY) for i in range(0, pyxel.width, BG_SKY[2])]
 
+        self.bg_sky = generate_objects(BG_SKY,
+                                       y=pyxel.height - ROAD[3] - TREE[3] - 10,
+                                       step=BG_SKY[2])
         self.continuous_bgs = [
             (16, far_clouds),
             (8, near_clouds),
@@ -84,8 +87,6 @@ class App:
         ]
         self.coins = coins
 
-        self.player_x = 72
-        self.player_y = pyxel.height - TAYO[3]-2
         self.tayo = DrawBase(self.player_x, self.player_y, 1, *TAYO)
         
         self.fg_poles = fg_poles
