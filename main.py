@@ -129,6 +129,9 @@ class App:
             pole.draw()
             if pole.is_hidden():
                 pole.x += pyxel.width * 2
-
+        # NOTE: score
+        score_string = f"score : {self.score}"
+        pyxel.text(6, 5, score_string, 2)
+        pyxel.text(5, 5, score_string, 7)
 
 App()
