@@ -1,3 +1,8 @@
+# title: Serial Tayo
+# author: Hulk.5
+# desc: for geonhoo
+# version: 0.3
+
 import pyxel
 
 from srcs.draw_obj import (
