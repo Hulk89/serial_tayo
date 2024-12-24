@@ -35,7 +35,7 @@ def generate_objects(object_tuple,
 
 class App:
     def __init__(self):
-        pyxel.init(160, 100, title="Serial Tayo", capture_sec=10, capture_scale=2)
+        pyxel.init(160, 100, title="Serial Tayo")
         pyxel.load("./assets/tayo.pyxres")
 
         self.score = 0
