@@ -1,7 +1,7 @@
 # title: Serial Tayo
 # author: Hulk.5
 # desc: for geonhoo
-# version: 0.3
+# version: 1.0
 
 import pyxel
 
